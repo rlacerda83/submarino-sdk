@@ -14,7 +14,7 @@ SDK Não Oficial para integração a partir de aplicações PHP com as APIs da B
 
 ## Instalação
 
-Adicione o pacote ``submarino-sdk`` ao seu projeto utilizando [composer](http://getcomposer.org):
+Adicione o pacote [submarino-sdk](https://packagist.org/packages/gpupo/submarino-sdk) ao seu projeto utilizando [composer](http://getcomposer.org):
 
     composer require gpupo/submarino-sdk
 
@@ -41,9 +41,9 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
     ///...
     use Gpupo\SubmarinoSdk\Factory;
 
-    $factory = Factory::getInstance()->setup(['token' => '7Ao82svbm#6', 'version' => 'sandbox']);
+    $submarinoSdk = Factory::getInstance()->setup(['token' => '7Ao82svbm#6', 'version' => 'sandbox']);
 
-    $manager = $factory->factoryManager('product'));
+    $manager = $submarinoSdk->factoryManager('product'));
 
     // Acesso a lista de produtos cadastrados:
     $produtosCadastrados = $manager->fetch(); // Collection de Objetos Product
@@ -55,10 +55,10 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
 
     // Criação de um produto:
     $data = []; // Veja o formato de $data em Resources/fixture/Products.json
-    $product = $factory->createProduct($data);
+    $product = $submarinoSdk->createProduct($data);
 
     foreach ($data['sku'] as $item) {
-        $sku = $factory->createSku($item);
+        $sku = $submarinoSdk->createSku($item);
         $product->getSku()->add($sku);
     }
 
@@ -70,9 +70,9 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
 
 
     <?php
-    ///...
+    // ...
 
-    $manager = $factory->factoryManager('product'));
+    $manager = $submarinoSdk->factoryManager('product'));
 
     // Acesso a lista de produtos cadastrados:
     $produtosCadastrados = $manager->fetch(); // Collection de Objetos Product
@@ -84,10 +84,10 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
 
     // Criação de um produto:
     $data = []; // Veja o formato de $data em Resources/fixture/Products.json
-    $product = $factory->createProduct($data);
+    $product = $submarinoSdk->createProduct($data);
 
     foreach ($data['sku'] as $item) {
-        $sku = $factory->createSku($item);
+        $sku = $submarinoSdk->createSku($item);
         $product->getSku()->add($sku);
     }
 
@@ -95,7 +95,7 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
 
     //Adicionando SKU ao produto:
     $skuData = []; // Defina o valor deste array conforme o esquema disponível em Resources/
-    $novoSku = $factory->createSku($skuData);
+    $novoSku = $submarinoSdk->createSku($skuData);
     $product->getSku()->add($novoSku);
     $manager->save($product);
 
@@ -104,7 +104,7 @@ Este exemplo demonstra o uso simplificado a partir do ``Factory``:
     <?php
     //...
 
-    $manager = $factory->factoryManager('order'));
+    $manager = $submarinoSdk->factoryManager('order'));
 
     $orderList = $manager->fetch(); //Recebe uma coleção ``\Gpupo\SubmarinoSdk\Entity\Order\Order``
 
@@ -180,20 +180,17 @@ MIT, see [LICENSE](https://github.com/gpupo/submarino-sdk/blob/master/LICENSE).
 
     composer install;
 
-
 Personalize a configuração do ``phpunit``:
 
     cp phpunit.xml.dist phpunit.xml;
 
 Insira sua Token de Sandbox em ``phpunit.xml``:
 
-```XML
     <!-- Customize your parameters ! -->
     <php>
         <const name="API_TOKEN" value=""/>
         <const name="VERBOSE" value="false"/>
     </php>
-```
 
 Rode os testes localmente:
 
@@ -211,15 +208,11 @@ Rode os testes localmente:
 
 ## Propriedades dos objetos
 
+A lista abaixo é gerada a partir da saída da execução dos testes unitários:
 <!--
-Comando para geração da lista:
-
-phpunit --testdox | grep -vi php |  sed "s/.*\[*]/-/" | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/Gpupo\\Tests\\SubmarinoSdk\\/### /g' > Resources/logs/testdox.txt
+phpunit --testdox | grep -vi php |  sed "s/.*\[*]/-/" | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/.*Gpupo.*/&\'$'\n/g' | sed 's/Gpupo\\Tests\\SubmarinoSdk\\/### /g' | sed '/./,/^$/!d' >> README.md
 -->
-A lista abaixo é gerada a partir da saída da execução dos testes:
-
 ### Client
-
 
 - Gerencia uri de recurso
 - Acesso a lista de pedidos
@@ -228,7 +221,6 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Order\Customer\Customer
 
-
 - Cada cliente possui endereco de entrega como objeto
 - Cada cliente possui colecao de telefones
 - Cada cliente possui objeto pessoa fisica
@@ -236,11 +228,9 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Order\Customer\Telephones\Telephones
 
-
 - Cada cliente possui colecao de telefones
 
 ### Entity\Order\Manager
-
 
 - Obtem lista pedidos
 - Obtém a lista de pedidos recém aprovados e que esperam processamento
@@ -250,7 +240,6 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - Atualiza dados de entrega de um pedido
 
 ### Entity\Order\Order
-
 
 - Cada item de uma lista e um objeto
 - Cada pedido possui objeto cliente
@@ -269,7 +258,6 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Order\Payer\Payer
 
-
 - Cada pagador possui endereco de cobrança como objeto
 - Cada pagador possui colecao de telefones
 - Cada pagador possui objeto pessoa fisica
@@ -277,11 +265,9 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Order\Products\Products
 
-
 - Cada pedido possui uma coleção de objetos produto
 
 ### Entity\Order\Status\Status
-
 
 - Cada status pode ser impresso como string
 - Cada status possui objeto invoiced
@@ -302,13 +288,11 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Product\Manager
 
-
 - Obtem lista de produtos cadastrados
 - Recupera informacoes de um produto especifico
 - Gerencia update
 
 ### Entity\Product\Product
-
 
 - Possui propriedades e objetos
 - Possui nbm formatado
@@ -319,18 +303,15 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 
 ### Entity\Product\Sku\Manager
 
-
 - Acesso a lista de skus cadastrados
 - Acessa a informacoes de um sku
 
 ### Entity\Product\Sku\Price
 
-
 - Possui preço normal
 - Possui preço com desconto
 
 ### Entity\Product\Sku\Sku
-
 
 - Envia dados opcionais apenas se preenchidos
 - Possui propriedade contendo url da imagem
@@ -338,7 +319,6 @@ A lista abaixo é gerada a partir da saída da execução dos testes:
 - Sku possui objeto stock
 
 ### Factory
-
 
 - Centraliza acesso a managers
 - Centraliza criacao de objetos
