@@ -1,2 +1,1 @@
-pygments: true
-pygments_options: ['lineanchors', 'linenos=table']
+highlighter: rouge
