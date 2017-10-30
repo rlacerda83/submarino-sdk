@@ -10,11 +10,17 @@
     ],
     "keywords": ["submarino","americanas", "B2W", "shoptime", "sdk", "api"],
     "license": "MIT",
+     "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/rlacerda83/common-sdk"
+        }
+    ],
     "require": {
         "php": "^5.6 || ^7.0",
         "ext-bcmath" : "*",
         "ext-curl" : "*",
-        "gpupo/common-sdk": "~2"
+        "gpupo/common-sdk": "dev-master"
     },
     "autoload": {
         "psr-4": {
